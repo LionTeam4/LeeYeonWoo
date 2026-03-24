@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토이 프로젝트</title>
+  </head>
+  <body>
+    <h1>Festival Archive</h1>
+    <!--추가 페이지로 이동하는 URL을 연결하세요.-->
+    <a href="{%url 'festival:new'%}">축제 추가</a>
+    <ol>
+      <!--For문을 완성하세요.-->
+      {% for info in infos %}
+      <li>
+        <!--상세 조회 페이지로 이동하는 URL을 연결하세요.-->
+        <a href="{% url 'festival:detail' info.id %}">
+        {% if info.image %}
+          <img src="{{ info.image.url }}" alt="{{ info.school }}" width="250">
+        {% else %}
+          <img src="https://via.placeholder.com/250x180?text=No+Image" alt="이미지 없음">
+        {% endif %}</a><br>
+        <a href="{% url 'festival:detail' info.id %}">{{info.school}}</a><br>
+        <p>축제날짜 : {{ info.date }}</p>
+        <p>[{{info.created}}]</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </body>
+</html>

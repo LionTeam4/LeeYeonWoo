@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토이 프로젝트</title>
+  </head>
+  <body>
+    <!--추가 페이지로 이동하는 URL을 연결하세요.-->
+    <a href="{% url 'festival:' %}">Go to Create Page</a>
+    <ol>
+      <!--For문을 완성하세요.-->
+      {% for %}
+      <li>
+        <!--상세 조회 페이지로 이동하는 URL을 연결하세요.-->
+        <a href="{% url 'festival: ' %}"></a>
+      </li>
+      {% endfor %}
+    </ol>
+  </body>
+</html>

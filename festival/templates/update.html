@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토이 프로젝트</title>
+  </head>
+  <body>
+    <h1>축제 정보 수정</h1>
+
+  <form action="{% url 'festival:update_info' update_info.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if update_info.image %}
+      <p><img src="{{ update_info.image.url }}" alt="{{ update_info.school }}" width="250"></p>
+    {% endif %}
+    <p>이미지: <input type="file" name="image"></p>
+    <p>학교: <input type="text" name="school" value="{{ update_info.school }}"></p>
+    <p>지역: <input type="text" name="region" value="{{ update_info.region }}"></p>
+    <p>날짜: <input type="date" name="date" value="{{ update_info.date|date:'Y-m-d' }}"></p>
+    <p>축제 장소: <input type="text" name="fes_location" value="{{ update_info.fes_location }}"></p>
+    <p>라인업: <textarea name="lineup" cols="30" rows="10">{{ update_info.lineup }}</textarea></p>
+
+    <button type="submit">수정 완료</button>
+  </form>
+  </body>
+</html>

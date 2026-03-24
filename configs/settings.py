@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'festival.apps.FestivalConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# 이미지 변수 추가 하기 위한 세팅
+MEDIA_URL = '/media/' # 브라우저에서 접근할 주소
+MEDIA_ROOT = BASE_DIR / 'media' # 실제 컴퓨터에 저장되는 폴더 위치
