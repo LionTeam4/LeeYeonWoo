@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>토이 프로젝트</title>
+  </head>
+  <body>
+    {% if info.image %}
+        <img src="{{ info.image.url }}" alt="{{ info.school }}" width="300">
+    {% endif %}
+
+    <h1>{{ info.school }}</h1>
+
+    <p>지역: {{ info.region }}</p>
+    <p>날짜: {{ info.date }}</p>
+    <p>축제 장소: {{ info.fes_location }}</p>
+    <p>라인업: {{ info.lineup }}</p>
+    <hr>
+    <p>작성일: {{ info.created|date:"Y-m-d H:i" }}</p>
+    
+    <a href="{% url 'festival:homelist' %}">목록으로 돌아가기</a>
+
+    <!--이 밑은 수정 버튼입니다. URL을 연결하세요.-->
+    <a href="{% url 'festival:update_page' info.id %}">Update</a>
+
+    <!--이 밑은 삭제 버튼입니다. URL을 연결하세요.-->
+    <form action="{% url 'festival:delete' info.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+    <!--리뷰-->
+    <h2>{{ info.school }} Review</h2>
+    <div class ="review-form-wrapper">
+      <a href = "{% url 'festival:add_review' info.id %}" class="btn-add-review">리뷰 작성</a>
+    </div>
+    <ul class="review-list">
+      {% for review in info.info_reviews.all %}
+      <li class="review-item">
+        <div class="review-header">
+          <div class="review-contents">
+          {{ review.contents }}
+          </div>
+          <span class="review-user|date">
+            {% if review.user %}
+              {{ review.user.name }} | {{ review.created|date:"Y-m-d H:i" }}
+            {% else %}
+              탈퇴한 회원 | {{ review.created|date:"Y-m-d H:i" }}
+            {% endif %}
+          </span>
+        </div>
+      </li>
+      {% empty %}
+      <li class="review-item">아직 등록된 후기가 없습니다.</li>
+      {% endfor %}
+    </ul>
+
+  </body>
+</html>

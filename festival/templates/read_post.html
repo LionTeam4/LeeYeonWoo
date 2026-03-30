@@ -1,0 +1,23 @@
+<!--게시물 read-->
+{% block content %}
+    <h1>{{ post.title }}</h1>
+
+    <p>작성자:
+        {% if post.user %}
+            {{ post.user.name }}
+        {% else %}
+            탈퇴한 회원입니다.
+        {% endif %}
+    </p>
+
+    <p>학교: {{ post.school }}</p>
+    <p>작성일: {{ post.created }}</p>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300">
+    {% endif %}
+
+    <p>{{ post.contents }}</p>
+
+    <a href="{% url 'festival:homelist' %}">목록으로</a>
+{% endblock %}
