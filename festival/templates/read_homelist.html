@@ -6,25 +6,76 @@
     <title>토이 프로젝트</title>
   </head>
   <body>
+    <!--축제 확인/게시-->
     <h1>Festival Archive</h1>
-    <!--추가 페이지로 이동하는 URL을 연결하세요.-->
-    <a href="{%url 'festival:new'%}">축제 추가</a>
-    <ol>
-      <!--For문을 완성하세요.-->
-      {% for info in infos %}
-      <li>
-        <!--상세 조회 페이지로 이동하는 URL을 연결하세요.-->
-        <a href="{% url 'festival:detail' info.id %}">
-        {% if info.image %}
-          <img src="{{ info.image.url }}" alt="{{ info.school }}" width="250">
-        {% else %}
-          <img src="https://via.placeholder.com/250x180?text=No+Image" alt="이미지 없음">
-        {% endif %}</a><br>
-        <a href="{% url 'festival:detail' info.id %}">{{info.school}}</a><br>
-        <p>축제날짜 : {{ info.date }}</p>
-        <p>[{{info.created}}]</p>
-      </li>
-      {% endfor %}
-    </ol>
+
+    <div class="top-button-box">
+      <button type="button" onclick="showFestival()">Festival</button>
+      <a href="{% url 'festival:new' %}" class="btn-add-festival">축제 추가</a>
+
+      <button type="button" onclick="showPost()">Community</button>
+      <a href="{% url 'festival:add_post' %}" class="btn-add-post">게시물 작성</a>
+    </div>
+
+    <div id="festival-section">
+      <ol>
+        {% for info in infos %}
+        <li>
+          <a href="{% url 'festival:detail' info.id %}">
+            {% if info.image %}
+              <img src="{{ info.image.url }}" alt="{{ info.school }}" width="250">
+            {% else %}
+              <img src="https://via.placeholder.com/250x180?text=No+Image" alt="이미지 없음">
+            {% endif %}
+          </a><br>
+
+          <a href="{% url 'festival:detail' info.id %}">{{ info.school }}</a><br>
+          <p>축제날짜 : {{ info.date }}</p>
+          <p>[{{ info.created }}]</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div id="post-section" style="display: none;">
+      <ol>
+        {% for post in posts %}
+        <li>
+          <a href="{% url 'festival:read_post' post.id %}">
+              {% if post.image %}
+              <img src="{{ post.image.url }}" alt="{{ post.title }}" width="250">
+            {% else %}
+              <img src="https://via.placeholder.com/250x180?text=No+Image" alt="이미지 없음">
+            {% endif %}
+          </a><br>
+
+          <a href="{% url 'festival:read_post' post.id %}">{{ post.title }}</a><br>
+
+          <small>
+            {{ post.school }} |
+            {% if post.user %}
+              {{ post.user.name }}
+            {% else %}
+              탈퇴한 회원입니다.
+            {% endif %}
+            |
+            {{ post.created }}
+          </small>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <script>
+      function showFestival() {
+        document.getElementById('festival-section').style.display = 'block';
+        document.getElementById('post-section').style.display = 'none';
+      }
+
+      function showPost() {
+        document.getElementById('festival-section').style.display = 'none';
+        document.getElementById('post-section').style.display = 'block';
+      }
+    </script>
   </body>
 </html>
