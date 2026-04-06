@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 # 사용자 테이블 설정
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 # 언어 설정
 LANGUAGE_CODE = 'ko-kr'
 # 시간대 설정
@@ -126,6 +126,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# 이미지 변수 추가 하기 위한 세팅
+
+# media
 MEDIA_URL = '/media/' # 브라우저에서 접근할 주소
 MEDIA_ROOT = BASE_DIR / 'media' # 실제 컴퓨터에 저장되는 폴더 위치

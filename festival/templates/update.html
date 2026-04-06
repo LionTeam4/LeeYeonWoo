@@ -13,10 +13,12 @@
     {% if update_info.image %}
       <p><img src="{{ update_info.image.url }}" alt="{{ update_info.school }}" width="250"></p>
     {% endif %}
+    <p>포스터: <input type="file" name="poster"></p>
     <p>이미지: <input type="file" name="image"></p>
     <p>학교: <input type="text" name="school" value="{{ update_info.school }}"></p>
     <p>지역: <input type="text" name="region" value="{{ update_info.region }}"></p>
-    <p>날짜: <input type="date" name="date" value="{{ update_info.date|date:'Y-m-d' }}"></p>
+    <p>시작 날짜: <input type="date" name="start_date" value="{{ update_info.start_date|date:'Y-m-d' }}"></p>
+    <p>종료 날짜: <input type="date" name="end_date" value="{{ update_info.end_date|date:'Y-m-d' }}"></p>
     <p>축제 장소: <input type="text" name="fes_location" value="{{ update_info.fes_location }}"></p>
     <p>라인업: <textarea name="lineup" cols="30" rows="10">{{ update_info.lineup }}</textarea></p>
 

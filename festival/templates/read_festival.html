@@ -6,6 +6,24 @@
     <title>토이 프로젝트</title>
   </head>
   <body>
+    <div class="poster-box">
+      {% if info.poster %}
+        <img src="{{ info.poster.url }}" alt="{{ info.school }} 축제 포스터" width="300">
+      {% else %}
+        <img src="https://via.placeholder.com/300x420?text=No+Poster" alt="포스터 없음">
+      {% endif %}
+
+      {% if request.user.is_authenticated %}
+        <form method="POST" action="{% url 'festival:detail' info.id %}" class="favorite-form">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="toggle_favorite">
+          <input type="hidden" name="info_id" value="{{ info.id }}">
+          <button type="submit" class="favorite-btn">
+            {% if info.is_favorite %}★{% else %}☆{% endif %}
+          </button>
+        </form>
+      {% endif %}
+    </div>
     {% if info.image %}
         <img src="{{ info.image.url }}" alt="{{ info.school }}" width="300">
     {% endif %}
@@ -13,7 +31,7 @@
     <h1>{{ info.school }}</h1>
 
     <p>지역: {{ info.region }}</p>
-    <p>날짜: {{ info.date }}</p>
+    <p>날짜: {{ info.start_date }} ~ {{ info.end_date }}</p>
     <p>축제 장소: {{ info.fes_location }}</p>
     <p>라인업: {{ info.lineup }}</p>
     <hr>
@@ -30,7 +48,7 @@
       <button type="submit">Delete</button>
     </form>
     <!--리뷰-->
-    <h2>{{ info.school }} Review</h2>
+    <h2>{{ info.school }} Review </h2>
     <div class ="review-form-wrapper">
       <a href = "{% url 'festival:add_review' info.id %}" class="btn-add-review">리뷰 작성</a>
     </div>
@@ -42,8 +60,8 @@
           {{ review.contents }}
           </div>
           <span class="review-user|date">
-            {% if review.user %}
-              {{ review.user.name }} | {{ review.created|date:"Y-m-d H:i" }}
+            {% if request.user %}
+              {{ request.user.nickname }} | {{ review.created|date:"Y-m-d H:i" }}
             {% else %}
               탈퇴한 회원 | {{ review.created|date:"Y-m-d H:i" }}
             {% endif %}

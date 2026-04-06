@@ -22,7 +22,9 @@ urlpatterns = [
     path('post/new',add_post,name='add_post'),
     # festival/post/1 -> post:1 read
     path('post/<int:post_id>/', read_post, name='read_post'),
-    # 1/review -> info:1 에 review 생성
+    # festival/1/comment -> post:1 에 comment 생성
+    path('<int:post_id>/comment', add_comment, name = 'add_comment'),
+    # festival/1/review -> info:1 에 review 생성
     path('<int:info_id>/review', add_review, name = 'add_review'),
 
     
