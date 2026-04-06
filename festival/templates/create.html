@@ -8,11 +8,13 @@
   <body>
     <form action="{% url 'festival:create' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
+    <p>포스터: <input type="file" name="poster"></p>
     <p>이미지: <input type="file" name="image"></p>
     <p>학교: <input type="text" name="school"></p>
     <p>지역: <input type="text" name="region"></p>
     <p>축제 장소: <input type="text" name="fes_location"></p>
-    <p>날짜: <input type="date" name="date"></p>
+    <p>시작 날짜: <input type="date" name="start_date"></p>
+    <p>종료 날짜: <input type="date" name="end_date"></p>
     <p>라인업: <textarea name="lineup" cols="30" rows="10"></textarea></p>
 
       <button type="submit">Create</button>

@@ -8,7 +8,18 @@
   <body>
     <!--축제 확인/게시-->
     <h1>Festival Archive</h1>
-
+    {% if not user.is_authenticated %}
+      <a href="{% url 'accounts:signup' %}">회원가입하기</a>
+      <a href="{% url 'accounts:login' %}">로그인하기</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <a href="{% url 'accounts:logout' %}">로그아웃하기</a>
+      <p>로그인 한 사람: {{ user.username }}</p>
+        <br>
+        <hr>
+        아이디: {{user.username}} 닉네임: {{user.nickname}} 대학: {{user.university}} 위치: {{user.location}}
+      </p>
+    {% endif %}
     <div class="top-button-box">
       <button type="button" onclick="showFestival()">Festival</button>
       <a href="{% url 'festival:new' %}" class="btn-add-festival">축제 추가</a>
@@ -21,16 +32,27 @@
       <ol>
         {% for info in infos %}
         <li>
-          <a href="{% url 'festival:detail' info.id %}">
-            {% if info.image %}
-              <img src="{{ info.image.url }}" alt="{{ info.school }}" width="250">
+          <div class="poster-box">
+            {% if info.poster %}
+              <img src="{{ info.poster.url }}" alt="{{ info.school }} 축제 포스터" width="250">
             {% else %}
-              <img src="https://via.placeholder.com/250x180?text=No+Image" alt="이미지 없음">
+              <img src="https://via.placeholder.com/250x180?text=No+Poster" alt="포스터 없음">
             {% endif %}
-          </a><br>
+
+            {% if request.user.is_authenticated %}
+              <form method="POST" action="{% url 'festival:homelist' %}" class="favorite-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="toggle_favorite">
+                <input type="hidden" name="info_id" value="{{ info.id }}">
+                <button type="submit" class="favorite-btn">
+                  {% if info.is_favorite %}★{% else %}☆{% endif %}
+                </button>
+              </form>
+            {% endif %}
+          </div>
 
           <a href="{% url 'festival:detail' info.id %}">{{ info.school }}</a><br>
-          <p>축제날짜 : {{ info.date }}</p>
+          <p>축제날짜 : {{ info.start_date }} ~ {{ info.end_date }}</p>
           <p>[{{ info.created }}]</p>
         </li>
         {% endfor %}
@@ -53,8 +75,8 @@
 
           <small>
             {{ post.school }} |
-            {% if post.user %}
-              {{ post.user.name }}
+            {% if request.user %}
+              {{ request.user.nickname }}
             {% else %}
               탈퇴한 회원입니다.
             {% endif %}

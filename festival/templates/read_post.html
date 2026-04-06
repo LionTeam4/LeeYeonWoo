@@ -1,10 +1,9 @@
 <!--게시물 read-->
 {% block content %}
     <h1>{{ post.title }}</h1>
-
     <p>작성자:
-        {% if post.user %}
-            {{ post.user.name }}
+        {% if request.user %}
+            {{ request.user.nickname }}
         {% else %}
             탈퇴한 회원입니다.
         {% endif %}
@@ -21,3 +20,29 @@
 
     <a href="{% url 'festival:homelist' %}">목록으로</a>
 {% endblock %}
+
+    <!--리뷰-->
+    <h2> Comments </h2>
+    <div class ="commenet-form-wrapper">
+      <a href = "{% url 'festival:add_comment' post.id %}" class="btn-add-comment">댓글 작성</a>
+    </div>
+    <ul class="comment-list">
+      {% for comment in post.post_comments.all %}
+      <li class="comment-item">
+        <div class="comment-header">
+          <div class="comment-contents">
+          {{ comment.contents }}
+          </div>
+          <span class="comment-user|date">
+            {% if request.user %}
+              {{ request.user.nickname }} | {{ comment.created|date:"Y-m-d H:i" }}
+            {% else %}
+              탈퇴한 회원 | {{ comment.created|date:"Y-m-d H:i" }}
+            {% endif %}
+          </span>
+        </div>
+      </li>
+      {% empty %}
+      <li class="comment-item">아직 등록된 댓글이 없습니다.</li>
+      {% endfor %}
+    </ul>
