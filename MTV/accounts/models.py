@@ -7,7 +7,7 @@ class CustomUser (AbstractUser):
     profile = models.ImageField(upload_to='user_images/', blank=True, null=True)
     nickname = models.CharField(max_length=50)
     myschool = models.CharField(max_length=50)
-    birth = models.DateField()
+    birth = models.DateField(blank=True, null=True)
     likearea = models.CharField(max_length=50)
     likeschool = models.CharField(max_length=50)
 
