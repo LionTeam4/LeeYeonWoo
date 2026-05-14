@@ -2,10 +2,12 @@ from django.http import HttpRequest, Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 
 class PostListView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request:HttpRequest, format=None):
         posts=Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -18,6 +20,7 @@ class PostListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PostDetailView(APIView):
+    permission_classes = [IsAuthenticated]
     def get_object(self,pk):
         try:
             return Post.objects.get(pk=pk)
@@ -40,6 +43,7 @@ class PostDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class CommentView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self,request:HttpRequest, format=None):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
@@ -48,6 +52,7 @@ class CommentView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class InfoListView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request:HttpRequest, format=None):
         infos=Info.objects.all()
         serializer = InfoSerializer(infos, many=True)
@@ -60,6 +65,7 @@ class InfoListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class InfoDetailView(APIView):
+    permission_classes = [IsAuthenticated]
     def get_object(self,pk):
         try:
             return Info.objects.get(pk=pk)
@@ -82,6 +88,7 @@ class InfoDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ReviewView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self,request:HttpRequest, format=None):
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid():
