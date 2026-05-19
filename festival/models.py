@@ -14,6 +14,7 @@ class Post (models.Model):
     # AUTH_USER_MODEL : 현재 유저 모델 이름
     title = models.CharField(max_length=50)
     # 필터링 다중선택 가능 (ex.이화여대,건국대 선택시 관련 게시물 필터링 ㄱㄴ)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     school = models.CharField(max_length=50)
     contents = models.TextField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
@@ -46,6 +47,8 @@ class Info (models.Model):
     end_date = models.DateField(null=True, blank=True)
     fes_location = models.CharField(max_length=50)
     lineup = models.TextField(max_length=500)
+    image = models.ImageField(upload_to='festival_images/', blank=True, null=True)
+    poster = models.ImageField(upload_to='festival_images/poster/', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
