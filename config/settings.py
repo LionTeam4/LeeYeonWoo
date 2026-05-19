@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!s5tyu$mxt-^_5a!etg^nf&#dhf6x#sxh1yzmy1fiu8cx9n3o*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yeonwoo845.pythonanywhere.com']
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
     'festival',
     'accounts',
 ]
@@ -65,6 +66,8 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,6 +76,20 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_WHITELIST = ( # cross-site 요청을 허용하는 호스트
+
+ 'https://example.com',
+
+ 'https://sub.example.com',
+
+ 'http://localhost:8000',
+
+ 'http://127.0.0.1:8000',
+
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -135,6 +152,28 @@ USE_I18N = True
 
 USE_TZ = True
 
+CORS_ALLOW_CREDENTIALS = True # 쿠키가 cross-site HTTP 요청에 포함됨
+CORS_ALLOW_METHOODS = ( # 실제 요청에 허용되는 HTTP 메서드
+'GET',
+'POST',
+'PUT',
+'PATCH',
+'DELETE',
+'OPTIONS',
+)
+CORS_ALLOW_HEADERS = ( # 요청을 할 때 사용될 수 있는 non-standard HTTP 헤더 목록
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
