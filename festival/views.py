@@ -52,7 +52,6 @@ class CommentView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class InfoListView(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request:HttpRequest, format=None):
         infos=Info.objects.all()
         serializer = InfoSerializer(infos, many=True)
